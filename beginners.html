@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beginners Guide — Secure-Smart-Sync</title>
+  <meta name="description" content="A complete step-by-step guide to setting up Secure-Smart-Sync from scratch — including Cloudflare account creation, R2 bucket setup, and plugin configuration." />
+  <link rel="icon" href="../assets/favicon_transparent.ico" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Home">
+      <svg viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="26" height="26"><g fill="#7c5cbf"><path d="M955 1921.80 c-153.40 -11.80 -301.40 -63.40 -431 -150.40 -78.40 -52.60 -152.20 -121.60 -212.20 -198.40 -93.80 -120.20 -157.60 -273.40 -176.60 -425 -8.20 -64.40 -9.20 -160 -2.40 -221 11.40 -100.60 41 -203 84.80 -292 114.40 -232.20 319 -403.80 563.40 -472.80 108.80 -30.60 220.60 -40.40 335 -29 426.20 42.20 769.60 393.60 802.20 821 3.40 46.80 1.40 148.20 -4 187.80 -18.20 133.20 -54.40 238.40 -120 347 -43.40 72 -99.40 140.80 -158.20 194.60 -152.80 139.80 -341.40 222.80 -541.80 238.40 -30.20 2.20 -108.80 2.20 -139.20 -0.20z m138.40 -326.80 c180.40 -23.80 350.80 -139.60 419.60 -286 23.20 -49 35.20 -104.80 32.20 -148.60 -8.80 -124.60 -94 -237.60 -207.80 -275.40 -51.20 -17 -92.40 -19 -140.20 -6.80 -17.60 4.60 -41.20 13.40 -41.20 15.80 0 0.80 2 3 4.20 5.20 7.60 6.80 39 49.80 49.80 68.20 23.60 39.80 30 53.40 30 64 0 23.60 -5 23.20 -145 -12.80 -60.40 -15.60 -142.80 -36.60 -183 -46.60 -40.20 -10.20 -75.40 -19.60 -78.20 -21.20 -6.60 -3.20 -7.80 -6.40 -7.80 -18.80 0 -12 2.60 -15.40 30.80 -39.60 103.80 -89.80 232.60 -143.80 371.20 -156.40 34 -3 110.40 -2.40 142 1 50.60 5.60 98 15.80 139.60 29.80 11.20 3.80 20.40 6.60 20.40 6 0 -0.40 -4.60 -10 -10.20 -21 -36.40 -72.80 -100.60 -147.40 -168 -195 -91 -64.60 -186.60 -98.80 -297.80 -106.80 -59.20 -4.20 -134.20 5.80 -198 26.40 -136.40 44.20 -249 137.20 -311.80 257.80 -38.40 73.80 -54 156.20 -42.40 224.20 14.80 85.80 59 156.80 128.60 206.60 55.80 40 134 62 195.20 55.20 19.60 -2.20 47.20 -7.40 51 -9.60 0.80 -0.40 -1.60 -4.60 -5.40 -9.20 -14.60 -18 -33.80 -48.80 -47.20 -75.40 -12.60 -25 -14 -29.20 -14 -39.60 0 -6.40 1 -12.60 2.40 -14 6.20 -6.20 25.40 -2.80 137.60 25.60 61 15.40 140.20 35.20 176 44 35.80 8.80 67 17 69.60 18 3.80 1.60 4.40 3.40 4.40 14.60 0 12 -0.40 13 -7.40 19.80 -23 21.80 -73.20 56.20 -111.40 76.60 -76.80 40.60 -159.20 65.40 -242.80 73 -34.80 3.20 -125 1.60 -156.40 -2.80 -36.20 -5.20 -84.20 -16.60 -119 -28.20 -17.60 -6 -32.20 -10.60 -32.40 -10.20 -1.40 1.40 22 39.80 37.20 60.80 94.40 132.20 250.20 219.40 418.20 234.20 26.80 2.40 77.20 1 107.40 -2.80z"/></g></svg>
+      <span class="nav-logo-text">Secure-Smart-Sync</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="quick-start.html">Quick Start</a></li>
+      <li><a href="beginners.html">Beginners Guide</a></li>
+      <li><a href="troubleshoot.html">Troubleshoot</a></li>
+      <li><a href="developers.html">Developers</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://github.com/xensenx/Secure_Smart_Sync" target="_blank" rel="noopener" class="btn btn-outline">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="container">
+
+    <div class="page-header">
+      <span class="badge">Beginners Guide</span>
+      <h1>Complete setup from scratch</h1>
+      <p>No prior experience with Cloudflare or cloud storage needed. This guide walks you through every step, including what things mean and why they matter.</p>
+    </div>
+
+    <!-- What is Cloudflare R2 -->
+    <section class="section-sm" id="what-is-r2">
+      <h2 class="reveal">What is Cloudflare R2?</h2>
+      <p class="reveal mt-1">Cloudflare R2 is a cloud file storage service — similar to Google Drive or Dropbox, but with no GUI app. It stores files in a private container called a <strong>bucket</strong>. You access it via an API (the plugin does this automatically). R2 has a <strong>generous free tier</strong>: 10 GB storage and 1 million requests per month at no cost.</p>
+      <p class="reveal mt-2">Unlike Obsidian Sync or iCloud, <strong>you own the bucket</strong> — Cloudflare cannot read your files, and neither can the plugin developer. With encryption enabled, nobody except you can.</p>
+
+      <div class="callout callout-info reveal mt-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="callout-body"><strong>Free tier estimate</strong><span> — A typical Obsidian vault of 5,000 notes is well under 500 MB. Most users will never pay anything.</span></div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Part 1: Cloudflare account -->
+    <section class="section-sm" id="cloudflare-account">
+      <h2 class="reveal">Part 1 — Create a Cloudflare account</h2>
+      <div class="step-flow mt-2">
+
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Go to Cloudflare</h3>
+            <p>Visit <a href="https://dash.cloudflare.com/sign-up" target="_blank" rel="noopener">dash.cloudflare.com/sign-up</a>. Enter your email and a strong password. Verify your email when prompted.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Navigate to R2</h3>
+            <p>Once logged in, find <strong>R2 Object Storage</strong> in the left sidebar. Click it. You may be asked to add a payment method — this is only needed if you exceed the free tier. A card is required to activate R2, but you will not be charged under normal vault usage.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Part 2: Create a bucket -->
+    <section class="section-sm" id="create-bucket">
+      <h2 class="reveal">Part 2 — Create an R2 bucket</h2>
+      <div class="step-flow mt-2">
+
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Click "Create bucket"</h3>
+            <p>On the R2 overview page, click <strong>Create bucket</strong>. Choose a name — something like <code>my-obsidian-vault</code>. The name must be unique within your account and use only lowercase letters, numbers, and hyphens.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Leave all other settings as default</h3>
+            <p>Location, storage class — leave everything as-is. Do <strong>not</strong> enable public access. Click <strong>Create bucket</strong> to confirm.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Part 3: API Token -->
+    <section class="section-sm" id="api-token">
+      <h2 class="reveal">Part 3 — Generate an API token</h2>
+      <p class="reveal mt-1">The plugin needs a key to read and write files in your bucket. This is separate from your Cloudflare login — it is a dedicated API token scoped only to R2.</p>
+
+      <div class="step-flow mt-2">
+
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Open API token settings</h3>
+            <p>On the R2 overview page, click <strong>Manage R2 API Tokens</strong> (top right). Then click <strong>Create API Token</strong>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Configure permissions</h3>
+            <p>Set <strong>Permissions</strong> to <strong>Object Read &amp; Write</strong>. Under <strong>Specify bucket</strong>, select the bucket you just created. Leave TTL (expiry) empty for a permanent token.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Save your credentials</h3>
+            <p>After creation, Cloudflare shows you three values. Copy them now — you will not be able to retrieve the secret again.</p>
+            <div class="card card-purple mt-2" style="font-size:0.875rem;">
+              <div style="display:grid; gap:0.5rem;">
+                <div><strong>Access Key ID</strong> — a short alphanumeric ID</div>
+                <div><strong>Secret Access Key</strong> — a long key, keep this private</div>
+                <div><strong>Endpoint URL</strong> — looks like <code>https://&lt;account-id&gt;.r2.cloudflarestorage.com</code></div>
+              </div>
+            </div>
+            <div class="callout callout-warning mt-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <div class="callout-body"><span>Store these in a password manager. Anyone with the secret key can read and modify your bucket.</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Part 4: Plugin setup -->
+    <section class="section-sm" id="plugin-setup">
+      <h2 class="reveal">Part 4 — Install and configure the plugin</h2>
+      <div class="step-flow mt-2">
+
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Enable Community Plugins in Obsidian</h3>
+            <p>Open Obsidian → <strong>Settings → Community Plugins</strong>. If prompted, click <strong>Turn on community plugins</strong>. This is required once per vault.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Install Secure-Smart-Sync</h3>
+            <p>Click <strong>Browse</strong>, search for <strong>Secure-Smart-Sync</strong>, and click <strong>Install</strong>. Once installed, click <strong>Enable</strong>.</p>
+            <p class="mt-1" style="font-size:0.875rem; color:var(--text-muted);">Alternatively, download the latest release from <a href="https://github.com/xensenx/Secure_Smart_Sync/releases" target="_blank" rel="noopener">GitHub releases</a> and copy <code>main.js</code>, <code>manifest.json</code>, and <code>styles.css</code> into <code>.obsidian/plugins/Secure-Smart-Sync/</code> manually.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Open SSS settings</h3>
+            <p>Go to <strong>Settings → Secure-Smart-Sync</strong>. You will see a settings panel with several sections.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h3>Fill in your R2 credentials</h3>
+            <p>Under the <strong>Cloudflare R2</strong> section, enter:</p>
+            <ul style="margin-top:0.5rem;">
+              <li><strong>Endpoint</strong> — the URL from Part 3</li>
+              <li><strong>Bucket</strong> — the name of your bucket</li>
+              <li><strong>Access Key ID</strong> — from Part 3</li>
+              <li><strong>Secret Access Key</strong> — from Part 3</li>
+            </ul>
+            <p class="mt-1">Click <strong>Test Connection</strong>. You should see <em>Connected successfully</em>. If not, see the <a href="troubleshoot.html">Troubleshooting guide</a>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h3>Set an encryption password</h3>
+            <p>Under <strong>Encryption</strong>, enter a password. This encrypts every file before it is uploaded. <strong>Do not lose this password</strong> — there is no recovery mechanism. If you lose it, your remote files cannot be decrypted.</p>
+            <p class="mt-1">Leave the method as <strong>OpenSSL AES-CBC</strong> unless you have a specific reason to change it.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <h3>Enable Smart Sync</h3>
+            <p>Under <strong>Automation</strong>, toggle on <strong>Smart Sync</strong>. This is the recommended mode — it handles everything automatically: syncing after you stop writing, notifying other devices, and catching up when Obsidian reopens.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">7</div>
+          <div class="step-body">
+            <h3>Trigger your first sync</h3>
+            <p>Click the SSS icon in the left ribbon (the purple S-shaped logo). This triggers a manual sync. You will see a brief notification when it completes. Your vault is now backed up to R2.</p>
+            <div class="callout callout-success mt-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <div class="callout-body"><span>After the first sync, Smart Sync takes over automatically. You do not need to click anything again.</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Pairing a second device -->
+    <section class="section-sm" id="pair-device">
+      <h2 class="reveal">Pairing a second device</h2>
+      <p class="reveal mt-1">You do not need to re-enter credentials manually on every new device. SSS has a built-in pairing system.</p>
+      <div class="step-flow mt-2">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>On your first device</h3>
+            <p>Go to <strong>Settings → Secure-Smart-Sync → Pair Devices → Generate Code</strong>. A 6-digit pairing code appears, valid for 10 minutes.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>On the new device</h3>
+            <p>Install and enable the plugin. In SSS settings, find the <strong>Enter Code</strong> field and type the pairing code. Click <strong>Import Code</strong>. Credentials are imported automatically.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Test and sync</h3>
+            <p>Hit <strong>Test Connection</strong> to confirm, then trigger a manual sync. The new device now shares the same vault.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <div class="grid-2 reveal" style="margin:2rem 0 4rem;">
+      <div class="card">
+        <h3>Something not working?</h3>
+        <p class="mt-1">Check common errors and their fixes in the Troubleshooting guide.</p>
+        <a href="troubleshoot.html" class="btn btn-outline mt-2">Troubleshoot</a>
+      </div>
+      <div class="card">
+        <h3>Need help?</h3>
+        <p class="mt-1">Open an issue on GitHub or contact Sen directly.</p>
+        <a href="support.html" class="btn btn-outline mt-2">Support</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="#7c5cbf"><path d="M955 1921.80 c-153.40 -11.80 -301.40 -63.40 -431 -150.40 -78.40 -52.60 -152.20 -121.60 -212.20 -198.40 -93.80 -120.20 -157.60 -273.40 -176.60 -425 -8.20 -64.40 -9.20 -160 -2.40 -221 11.40 -100.60 41 -203 84.80 -292 114.40 -232.20 319 -403.80 563.40 -472.80 108.80 -30.60 220.60 -40.40 335 -29 426.20 42.20 769.60 393.60 802.20 821 3.40 46.80 1.40 148.20 -4 187.80 -18.20 133.20 -54.40 238.40 -120 347 -43.40 72 -99.40 140.80 -158.20 194.60 -152.80 139.80 -341.40 222.80 -541.80 238.40 -30.20 2.20 -108.80 2.20 -139.20 -0.20z"/></g></svg>
+      <span>Secure-Smart-Sync</span>
+    </div>
+    <p class="footer-meta">MIT License &middot; Built by <a href="https://github.com/xensenx" target="_blank" rel="noopener">Sen</a></p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="privacy policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+      <a href="https://github.com/xensenx/Secure_Smart_Sync" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

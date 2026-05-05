@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developers — Secure-Smart-Sync</title>
+  <meta name="description" content="Developer notes for Secure-Smart-Sync — token usage, API request patterns, encryption internals, and self-hosting the relay." />
+  <link rel="icon" href="../assets/favicon_transparent.ico" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Home">
+      <svg viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="26" height="26"><g fill="#7c5cbf"><path d="M955 1921.80 c-153.40 -11.80 -301.40 -63.40 -431 -150.40 -78.40 -52.60 -152.20 -121.60 -212.20 -198.40 -93.80 -120.20 -157.60 -273.40 -176.60 -425 -8.20 -64.40 -9.20 -160 -2.40 -221 11.40 -100.60 41 -203 84.80 -292 114.40 -232.20 319 -403.80 563.40 -472.80 108.80 -30.60 220.60 -40.40 335 -29 426.20 42.20 769.60 393.60 802.20 821 3.40 46.80 1.40 148.20 -4 187.80 -18.20 133.20 -54.40 238.40 -120 347 -43.40 72 -99.40 140.80 -158.20 194.60 -152.80 139.80 -341.40 222.80 -541.80 238.40 -30.20 2.20 -108.80 2.20 -139.20 -0.20z m138.40 -326.80 c180.40 -23.80 350.80 -139.60 419.60 -286 23.20 -49 35.20 -104.80 32.20 -148.60 -8.80 -124.60 -94 -237.60 -207.80 -275.40 -51.20 -17 -92.40 -19 -140.20 -6.80 -17.60 4.60 -41.20 13.40 -41.20 15.80 0 0.80 2 3 4.20 5.20 7.60 6.80 39 49.80 49.80 68.20 23.60 39.80 30 53.40 30 64 0 23.60 -5 23.20 -145 -12.80 -60.40 -15.60 -142.80 -36.60 -183 -46.60 -40.20 -10.20 -75.40 -19.60 -78.20 -21.20 -6.60 -3.20 -7.80 -6.40 -7.80 -18.80 0 -12 2.60 -15.40 30.80 -39.60 103.80 -89.80 232.60 -143.80 371.20 -156.40 34 -3 110.40 -2.40 142 1 50.60 5.60 98 15.80 139.60 29.80 11.20 3.80 20.40 6.60 20.40 6 0 -0.40 -4.60 -10 -10.20 -21 -36.40 -72.80 -100.60 -147.40 -168 -195 -91 -64.60 -186.60 -98.80 -297.80 -106.80 -59.20 -4.20 -134.20 5.80 -198 26.40 -136.40 44.20 -249 137.20 -311.80 257.80 -38.40 73.80 -54 156.20 -42.40 224.20 14.80 85.80 59 156.80 128.60 206.60 55.80 40 134 62 195.20 55.20 19.60 -2.20 47.20 -7.40 51 -9.60 0.80 -0.40 -1.60 -4.60 -5.40 -9.20 -14.60 -18 -33.80 -48.80 -47.20 -75.40 -12.60 -25 -14 -29.20 -14 -39.60 0 -6.40 1 -12.60 2.40 -14 6.20 -6.20 25.40 -2.80 137.60 25.60 61 15.40 140.20 35.20 176 44 35.80 8.80 67 17 69.60 18 3.80 1.60 4.40 3.40 4.40 14.60 0 12 -0.40 13 -7.40 19.80 -23 21.80 -73.20 56.20 -111.40 76.60 -76.80 40.60 -159.20 65.40 -242.80 73 -34.80 3.20 -125 1.60 -156.40 -2.80 -36.20 -5.20 -84.20 -16.60 -119 -28.20 -17.60 -6 -32.20 -10.60 -32.40 -10.20 -1.40 1.40 22 39.80 37.20 60.80 94.40 132.20 250.20 219.40 418.20 234.20 26.80 2.40 77.20 1 107.40 -2.80z"/></g></svg>
+      <span class="nav-logo-text">Secure-Smart-Sync</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="quick-start.html">Quick Start</a></li>
+      <li><a href="beginners.html">Beginners Guide</a></li>
+      <li><a href="troubleshoot.html">Troubleshoot</a></li>
+      <li><a href="developers.html">Developers</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://github.com/xensenx/Secure_Smart_Sync" target="_blank" rel="noopener" class="btn btn-outline">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="container" style="max-width:800px;">
+
+    <div class="page-header">
+      <span class="badge">Developers</span>
+      <h1>Developer Notes</h1>
+      <p>API token usage, R2 request patterns, encryption internals, and self-hosting the pairing relay. Useful if you are modifying, auditing, or extending the plugin.</p>
+    </div>
+
+    <!-- Token usage -->
+    <section class="section-sm" id="token-usage">
+      <h2 class="reveal">R2 API token usage</h2>
+      <p class="reveal mt-1">SSS uses an S3-compatible API to interact with Cloudflare R2. The API token you create in Cloudflare is used directly — there is no intermediate server. Every request is made from the Obsidian client on your device.</p>
+
+      <h3 class="reveal mt-3">Request types per sync</h3>
+      <p class="reveal mt-1">A typical sync cycle issues the following R2 API calls:</p>
+      <div class="table-wrap reveal mt-2">
+        <table>
+          <thead><tr><th>Operation</th><th>API call</th><th>When</th></tr></thead>
+          <tbody>
+            <tr><td>List remote files</td><td><code>ListObjectsV2</code></td><td>Every sync — one call (paginated for large vaults)</td></tr>
+            <tr><td>Download file</td><td><code>GetObject</code></td><td>Per file pulled from remote</td></tr>
+            <tr><td>Upload file</td><td><code>PutObject</code></td><td>Per file pushed to remote</td></tr>
+            <tr><td>Delete file</td><td><code>DeleteObject</code></td><td>Per deletion propagated to remote</td></tr>
+            <tr><td>Get remote ETag</td><td><code>HeadObject</code></td><td>Per pushed file (to store ETag in prevSync)</td></tr>
+            <tr><td>Sentinel read/write</td><td><code>GetObject</code> / <code>PutObject</code></td><td>Smart Sync only — one small object per sync</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="reveal mt-3">Cloudflare R2 free tier limits</h3>
+      <div class="table-wrap reveal mt-1">
+        <table>
+          <thead><tr><th>Resource</th><th>Free allowance</th><th>Typical vault usage</th></tr></thead>
+          <tbody>
+            <tr><td>Storage</td><td>10 GB / month</td><td>Most vaults &lt; 500 MB</td></tr>
+            <tr><td>Class A operations (writes, lists)</td><td>1,000,000 / month</td><td>Low — only changed files are written</td></tr>
+            <tr><td>Class B operations (reads)</td><td>10,000,000 / month</td><td>Very low with Smart Sync (sentinel-driven)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-info reveal mt-2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="callout-body"><span>Smart Sync reduces request count significantly. Rather than polling R2 on a fixed interval, it writes a tiny sentinel object after each sync. Other devices detect this via a periodic check (default every 30 s) and only pull if the sentinel changed — avoiding redundant <code>ListObjectsV2</code> calls.</span></div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Encryption internals -->
+    <section class="section-sm" id="encryption">
+      <h2 class="reveal">Encryption internals</h2>
+      <p class="reveal mt-1">SSS supports two encryption methods, selectable per-vault. Both use client-side encryption — files are encrypted before upload and decrypted after download.</p>
+
+      <h3 class="reveal mt-3">OpenSSL AES-CBC (<code>openssl-base64</code>)</h3>
+      <ul class="reveal mt-1">
+        <li>Content encrypted with AES-256-CBC, OpenSSL-compatible format.</li>
+        <li>File <strong>names</strong> are encoded as <strong>base64url</strong> but not encrypted — the file path structure is visible on the remote.</li>
+        <li>Compatible with standard OpenSSL tooling for manual recovery if needed.</li>
+        <li>Salt and IV are prepended to each file, following the <code>Salted__</code> header convention.</li>
+      </ul>
+
+      <h3 class="reveal mt-3">rclone Salsa20 (<code>rclone-base64</code>)</h3>
+      <ul class="reveal mt-1">
+        <li>Content encrypted with Salsa20+Poly1305 — same algorithm used by rclone's crypt remote.</li>
+        <li>File <strong>names are also encrypted</strong> and randomised — directory structure is hidden on the remote.</li>
+        <li>Compatible with <code>rclone</code> for manual recovery using the same password.</li>
+        <li>Implemented in a dedicated Web Worker to avoid blocking the UI thread on large files.</li>
+      </ul>
+
+      <div class="callout callout-warning reveal mt-2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="callout-body"><strong>Do not switch methods mid-vault.</strong><span> Changing the encryption method after syncing means the remote files were encrypted with the old method. The plugin will detect the mismatch at startup and refuse to sync. Clear the remote, reset sync history, and sync fresh with the new method.</span></div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Sync engine -->
+    <section class="section-sm" id="sync-engine">
+      <h2 class="reveal">3-way sync engine</h2>
+      <p class="reveal mt-1">The sync engine compares three states for each file path:</p>
+      <div class="grid-3 reveal mt-2" style="gap:1rem;">
+        <div class="card" style="padding:1rem;">
+          <h4 style="color:var(--purple-light); margin-bottom:0.4rem;">Local</h4>
+          <p style="font-size:0.875rem;">Current state of the file on this device's vault.</p>
+        </div>
+        <div class="card" style="padding:1rem;">
+          <h4 style="color:var(--purple-light); margin-bottom:0.4rem;">Remote</h4>
+          <p style="font-size:0.875rem;">Current state of the encrypted blob in R2.</p>
+        </div>
+        <div class="card" style="padding:1rem;">
+          <h4 style="color:var(--purple-light); margin-bottom:0.4rem;">prevSync</h4>
+          <p style="font-size:0.875rem;">Snapshot from the last successful sync, stored in a local SQLite DB.</p>
+        </div>
+      </div>
+      <p class="reveal mt-2">Change detection uses <strong>ETag</strong> for remote comparisons and <strong>mtime + size</strong> for local comparisons. ETags are stored in the prevSync record after each push to avoid re-uploading unchanged encrypted files (whose size and mtime differ from plaintext).</p>
+
+      <h3 class="reveal mt-3">Decision matrix</h3>
+      <div class="table-wrap reveal mt-1">
+        <table>
+          <thead><tr><th>Local changed?</th><th>Remote changed?</th><th>Decision</th></tr></thead>
+          <tbody>
+            <tr><td>No</td><td>No</td><td>Skip (no_change)</td></tr>
+            <tr><td>Yes</td><td>No</td><td>Push local → remote</td></tr>
+            <tr><td>No</td><td>Yes</td><td>Pull remote → local</td></tr>
+            <tr><td>Yes</td><td>Yes</td><td>Conflict — resolved per setting (keep_newer, keep_larger, etc.)</td></tr>
+            <tr><td>Deleted locally</td><td>Unchanged</td><td>Delete remote</td></tr>
+            <tr><td>Unchanged</td><td>Deleted remotely</td><td>Delete local</td></tr>
+            <tr><td>New (no prevSync)</td><td>Absent</td><td>Push (first upload)</td></tr>
+            <tr><td>Absent</td><td>New (no prevSync)</td><td>Pull (first download)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Smart Sync / sentinel -->
+    <section class="section-sm" id="smart-sync">
+      <h2 class="reveal">Smart Sync &amp; sentinel mechanism</h2>
+      <p class="reveal mt-1">Smart Sync uses a lightweight sentinel object in R2 (<code>.sss-sentinel</code>) to notify other devices of a completed sync without requiring a persistent WebSocket connection.</p>
+      <div class="step-flow mt-2" style="max-width:640px;">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Idle trigger</h3>
+            <p>After <code>smartSyncIdleSeconds</code> (default 7 s) of editor inactivity, a sync is triggered. This is debounced on every editor-change event.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Sentinel write</h3>
+            <p>After a successful sync, the plugin writes a small JSON object to R2 containing a timestamp and device ID. Sentinel writes are skipped for <code>state_aware</code> triggers to prevent A→B→A cascade loops.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Sentinel poll</h3>
+            <p>Other open devices poll the sentinel every 30 s. If the sentinel's timestamp is newer than the last seen value and the device ID differs (i.e., another device wrote it), a <code>state_aware</code> sync is triggered to pull changes.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h3>Visibility-aware polling</h3>
+            <p>The poll interval is paused when the document is hidden (app backgrounded) and resumed immediately on visibility. A one-shot poll fires on foreground to catch missed changes without waiting 30 s.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Self-hosting relay -->
+    <section class="section-sm" id="relay">
+      <h2 class="reveal">Self-hosting the pairing relay</h2>
+      <p class="reveal mt-1">The pairing relay is a minimal Cloudflare Worker that holds an encrypted credential bundle for up to 10 minutes. It is fully open source.</p>
+      <div class="card reveal mt-2">
+        <p style="font-size:0.875rem; margin-bottom:0.75rem;"><strong>Repository:</strong> <a href="https://github.com/xensenx/sss-relay" target="_blank" rel="noopener">github.com/xensenx/sss-relay</a></p>
+        <p style="font-size:0.875rem; color:var(--text-secondary);">Deploy it as a Cloudflare Worker, then point SSS to your URL under <strong>Settings → Advanced → Custom Relay URL</strong>. The relay never sees plaintext credentials — the bundle is encrypted client-side with a key derived from the pairing code before being sent.</p>
+      </div>
+
+      <h3 class="reveal mt-3">Relay API surface</h3>
+      <div class="table-wrap reveal mt-1">
+        <table>
+          <thead><tr><th>Endpoint</th><th>Method</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>/create</code></td><td>POST</td><td>Store encrypted bundle, receive pairing code</td></tr>
+            <tr><td><code>/consume/:code</code></td><td>POST</td><td>Retrieve and delete bundle by code</td></tr>
+            <tr><td><code>/health</code></td><td>GET</td><td>Relay liveness check</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Local DB -->
+    <section class="section-sm" id="database">
+      <h2 class="reveal">Local database</h2>
+      <p class="reveal mt-1">SSS uses <strong>IndexedDB</strong> (via the <code>idb-keyval</code>-style abstraction in <code>database.ts</code>) to persist sync state. The database is namespaced by vault ID so multiple vaults on the same device do not interfere.</p>
+      <p class="reveal mt-1">Key tables:</p>
+      <ul class="reveal mt-1">
+        <li><code>prev_sync_records</code> — one row per synced file: path, size, mtime, ETag.</li>
+        <li><code>sync_history</code> — timestamped log of past sync stats for diagnostics.</li>
+        <li><code>meta</code> — plugin version, last success/failure timestamps.</li>
+      </ul>
+      <p class="reveal mt-1">The database location is managed by Obsidian's plugin data API and is not directly accessible from the filesystem. Use <strong>Reset Sync History</strong> in Danger Zone to clear <code>prev_sync_records</code>, which forces a full comparison on the next sync.</p>
+    </section>
+
+    <hr />
+
+    <!-- Build -->
+    <section class="section-sm reveal" id="build">
+      <h2>Building from source</h2>
+      <pre><code># Clone the repository
+git clone https://github.com/xensenx/Secure_Smart_Sync.git
+cd Secure_Smart_Sync
+
+# Install dependencies
+npm install
+
+# Development build (watch mode)
+npm run dev
+
+# Production build
+npm run build</code></pre>
+      <p class="mt-2 text-sm">The built output (<code>main.js</code>, <code>manifest.json</code>, <code>styles.css</code>) is placed in the project root. Copy these into your vault's <code>.obsidian/plugins/Secure-Smart-Sync/</code> directory to test.</p>
+    </section>
+
+    <div style="margin-bottom:4rem;"></div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="#7c5cbf"><path d="M955 1921.80 c-153.40 -11.80 -301.40 -63.40 -431 -150.40 -78.40 -52.60 -152.20 -121.60 -212.20 -198.40 -93.80 -120.20 -157.60 -273.40 -176.60 -425 -8.20 -64.40 -9.20 -160 -2.40 -221 11.40 -100.60 41 -203 84.80 -292 114.40 -232.20 319 -403.80 563.40 -472.80 108.80 -30.60 220.60 -40.40 335 -29 426.20 42.20 769.60 393.60 802.20 821 3.40 46.80 1.40 148.20 -4 187.80 -18.20 133.20 -54.40 238.40 -120 347 -43.40 72 -99.40 140.80 -158.20 194.60 -152.80 139.80 -341.40 222.80 -541.80 238.40 -30.20 2.20 -108.80 2.20 -139.20 -0.20z"/></g></svg>
+      <span>Secure-Smart-Sync</span>
+    </div>
+    <p class="footer-meta">MIT License &middot; Built by <a href="https://github.com/xensenx" target="_blank" rel="noopener">Sen</a></p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="privacy policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+      <a href="https://github.com/xensenx/Secure_Smart_Sync" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

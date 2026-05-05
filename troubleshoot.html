@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting — Secure-Smart-Sync</title>
+  <meta name="description" content="Common errors, mistakes, and fixes for Secure-Smart-Sync. Connection failures, encryption issues, sync conflicts, and more." />
+  <link rel="icon" href="../assets/favicon_transparent.ico" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Home">
+      <svg viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="26" height="26"><g fill="#7c5cbf"><path d="M955 1921.80 c-153.40 -11.80 -301.40 -63.40 -431 -150.40 -78.40 -52.60 -152.20 -121.60 -212.20 -198.40 -93.80 -120.20 -157.60 -273.40 -176.60 -425 -8.20 -64.40 -9.20 -160 -2.40 -221 11.40 -100.60 41 -203 84.80 -292 114.40 -232.20 319 -403.80 563.40 -472.80 108.80 -30.60 220.60 -40.40 335 -29 426.20 42.20 769.60 393.60 802.20 821 3.40 46.80 1.40 148.20 -4 187.80 -18.20 133.20 -54.40 238.40 -120 347 -43.40 72 -99.40 140.80 -158.20 194.60 -152.80 139.80 -341.40 222.80 -541.80 238.40 -30.20 2.20 -108.80 2.20 -139.20 -0.20z m138.40 -326.80 c180.40 -23.80 350.80 -139.60 419.60 -286 23.20 -49 35.20 -104.80 32.20 -148.60 -8.80 -124.60 -94 -237.60 -207.80 -275.40 -51.20 -17 -92.40 -19 -140.20 -6.80 -17.60 4.60 -41.20 13.40 -41.20 15.80 0 0.80 2 3 4.20 5.20 7.60 6.80 39 49.80 49.80 68.20 23.60 39.80 30 53.40 30 64 0 23.60 -5 23.20 -145 -12.80 -60.40 -15.60 -142.80 -36.60 -183 -46.60 -40.20 -10.20 -75.40 -19.60 -78.20 -21.20 -6.60 -3.20 -7.80 -6.40 -7.80 -18.80 0 -12 2.60 -15.40 30.80 -39.60 103.80 -89.80 232.60 -143.80 371.20 -156.40 34 -3 110.40 -2.40 142 1 50.60 5.60 98 15.80 139.60 29.80 11.20 3.80 20.40 6.60 20.40 6 0 -0.40 -4.60 -10 -10.20 -21 -36.40 -72.80 -100.60 -147.40 -168 -195 -91 -64.60 -186.60 -98.80 -297.80 -106.80 -59.20 -4.20 -134.20 5.80 -198 26.40 -136.40 44.20 -249 137.20 -311.80 257.80 -38.40 73.80 -54 156.20 -42.40 224.20 14.80 85.80 59 156.80 128.60 206.60 55.80 40 134 62 195.20 55.20 19.60 -2.20 47.20 -7.40 51 -9.60 0.80 -0.40 -1.60 -4.60 -5.40 -9.20 -14.60 -18 -33.80 -48.80 -47.20 -75.40 -12.60 -25 -14 -29.20 -14 -39.60 0 -6.40 1 -12.60 2.40 -14 6.20 -6.20 25.40 -2.80 137.60 25.60 61 15.40 140.20 35.20 176 44 35.80 8.80 67 17 69.60 18 3.80 1.60 4.40 3.40 4.40 14.60 0 12 -0.40 13 -7.40 19.80 -23 21.80 -73.20 56.20 -111.40 76.60 -76.80 40.60 -159.20 65.40 -242.80 73 -34.80 3.20 -125 1.60 -156.40 -2.80 -36.20 -5.20 -84.20 -16.60 -119 -28.20 -17.60 -6 -32.20 -10.60 -32.40 -10.20 -1.40 1.40 22 39.80 37.20 60.80 94.40 132.20 250.20 219.40 418.20 234.20 26.80 2.40 77.20 1 107.40 -2.80z"/></g></svg>
+      <span class="nav-logo-text">Secure-Smart-Sync</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="quick-start.html">Quick Start</a></li>
+      <li><a href="beginners.html">Beginners Guide</a></li>
+      <li><a href="troubleshoot.html">Troubleshoot</a></li>
+      <li><a href="developers.html">Developers</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://github.com/xensenx/Secure_Smart_Sync" target="_blank" rel="noopener" class="btn btn-outline">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="container">
+
+    <div class="page-header">
+      <span class="badge">Troubleshooting</span>
+      <h1>Common issues and fixes</h1>
+      <p>Errors, mistakes, and unexpected behaviour — and how to resolve them. If your issue isn't listed here, <a href="https://github.com/xensenx/Secure_Smart_Sync/issues" target="_blank" rel="noopener">open a GitHub issue</a>.</p>
+    </div>
+
+    <!-- Connection errors -->
+    <section class="section-sm" id="connection">
+      <h2 class="reveal">Connection errors</h2>
+      <div data-accordion-group class="mt-2">
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-connection-failed">
+            "Cannot connect to R2. Check your credentials and endpoint."
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>This appears when the plugin cannot reach your R2 bucket. Common causes:</p>
+              <ul class="mt-1">
+                <li>The <strong>Endpoint URL</strong> is wrong or missing. It must follow the format <code>https://&lt;account-id&gt;.r2.cloudflarestorage.com</code> — do not include the bucket name here.</li>
+                <li>The <strong>Access Key ID</strong> or <strong>Secret Access Key</strong> was copied incorrectly. Try re-entering them.</li>
+                <li>The API token does not have <strong>Object Read &amp; Write</strong> permission on the correct bucket.</li>
+                <li>The bucket name in the settings does not match what you created in Cloudflare.</li>
+              </ul>
+              <div class="callout callout-info mt-2">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <div class="callout-body"><span>The endpoint URL does <strong>not</strong> end with the bucket name. The bucket name is entered in the separate <em>Bucket</em> field.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-403">
+            Connection test returns 403 Forbidden
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>A 403 means the credentials are valid but the token lacks permission to access the bucket. Check that:</p>
+              <ul class="mt-1">
+                <li>The token was created with <strong>Object Read &amp; Write</strong> (not Admin or read-only).</li>
+                <li>The token is scoped to the correct bucket — "All buckets" or the specific bucket you named.</li>
+                <li>The token has not been revoked in Cloudflare.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-404">
+            Connection test returns 404 Not Found
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>The bucket name entered in SSS settings does not match an existing bucket in your Cloudflare account. Verify the exact name — it is case-sensitive.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Encryption errors -->
+    <section class="section-sm" id="encryption">
+      <h2 class="reveal">Encryption errors</h2>
+      <div data-accordion-group class="mt-2">
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-password-check">
+            "Encryption password check failed"
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>This means the password you entered does not match the one used to encrypt the remote files. Possible causes:</p>
+              <ul class="mt-1">
+                <li>You changed the password in settings after already syncing. The remote files were encrypted with the old password.</li>
+                <li>You are on a new device and the password was entered with a typo.</li>
+                <li>The <strong>encryption method</strong> does not match what was used originally (e.g., OpenSSL vs rclone).</li>
+              </ul>
+              <div class="callout callout-warning mt-2">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div class="callout-body"><span>If you changed the password, you must re-upload all files with the new password. The safest approach: clear remote files, reset sync history (Danger Zone), then sync again.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-decrypt-fail">
+            Files downloaded but appear corrupted or unreadable
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>If files download but open as garbled text, the decryption failed silently. Most common reason: the <strong>encryption method</strong> on this device differs from the device that uploaded them. Check both devices have the same method set (OpenSSL or rclone).</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Sync behaviour -->
+    <section class="section-sm" id="sync">
+      <h2 class="reveal">Sync behaviour</h2>
+      <div data-accordion-group class="mt-2">
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-conflict">
+            A <code>.conflict</code> file appeared in my vault
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>This is expected and intentional. When the same file was edited on two devices without syncing in between, SSS detects a conflict. The <strong>winning version</strong> is written to the original path; the <strong>losing version</strong> is saved with a <code>.conflict</code> suffix so nothing is discarded.</p>
+              <p class="mt-1">Review the conflict file, merge any changes manually if needed, then delete the <code>.conflict</code> copy.</p>
+              <p class="mt-1">To reduce conflicts: keep <strong>Smart Sync</strong> enabled on all devices so changes propagate quickly.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-no-sync">
+            Smart Sync is on but nothing syncs automatically
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>Smart Sync fires after you stop typing for the configured idle time (default 7 seconds). If nothing is happening:</p>
+              <ul class="mt-1">
+                <li>Make sure you are actually editing a file inside the vault (not just viewing).</li>
+                <li>Check that the plugin is enabled and settings were saved.</li>
+                <li>Try a manual sync by clicking the ribbon icon. If that works, Smart Sync is correctly configured — the idle trigger just hasn't fired yet.</li>
+                <li>Open the Obsidian developer console (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd>) and look for any <code>[SSS]</code> errors.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-full-resync">
+            Every sync re-uploads everything (full re-sync each time)
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>SSS uses a local database to track what was last synced. If this database is missing or was reset, the next sync compares everything from scratch. This is normal after:</p>
+              <ul class="mt-1">
+                <li>Using <strong>Reset Sync History</strong> in the Danger Zone.</li>
+                <li>Moving the vault to a new location.</li>
+                <li>Reinstalling Obsidian or the plugin.</li>
+              </ul>
+              <p class="mt-1">One full re-sync is expected in these situations. After it completes, subsequent syncs will only transfer changed files.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-file-skipped">
+            Some files are not syncing (skipped)
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>Files can be skipped for several reasons:</p>
+              <ul class="mt-1">
+                <li>They match a pattern in your <strong>Ignore Paths</strong> list.</li>
+                <li>They exceed the <strong>Max File Size</strong> limit you configured.</li>
+                <li>They are inside <code>.obsidian/</code> and <strong>Sync Config Dir</strong> is disabled.</li>
+                <li>The sync direction is set to <strong>Push Only</strong> or <strong>Pull Only</strong>, limiting which files move.</li>
+              </ul>
+              <p class="mt-1">Use the <strong>Dry Run</strong> command (command palette → "Dry run") to see exactly which files would be synced or skipped before committing.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Device pairing -->
+    <section class="section-sm" id="pairing">
+      <h2 class="reveal">Device pairing</h2>
+      <div data-accordion-group class="mt-2">
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="err-pairing-failed">
+            "Pairing failed" when generating or entering a code
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              <p>The pairing system uses a lightweight relay server to transfer credentials end-to-end encrypted. Failures usually mean:</p>
+              <ul class="mt-1">
+                <li>The code has expired — pairing codes are valid for <strong>10 minutes</strong>. Generate a new one.</li>
+                <li>The code was entered incorrectly. It is case-insensitive but must match exactly.</li>
+                <li>The relay server is temporarily unreachable. Wait a moment and try again.</li>
+              </ul>
+              <p class="mt-1">If you consistently cannot use the relay, you can enter credentials manually on the new device instead.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- Diagnostics tip -->
+    <section class="section-sm reveal" id="diagnostics">
+      <h2>Reading the logs</h2>
+      <p class="mt-1">If you are stuck, the developer console is the most useful tool. In Obsidian, open it with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd> (Windows/Linux) or <kbd>Cmd</kbd>+<kbd>Option</kbd>+<kbd>I</kbd> (macOS). Filter by <code>[SSS]</code> to see only plugin messages.</p>
+      <p class="mt-1">Set <strong>Log Level</strong> to <strong>Debug</strong> in SSS Advanced settings for maximum detail. Copy the relevant lines when opening a GitHub issue — it speeds up diagnosis considerably.</p>
+
+      <div class="callout callout-info mt-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="callout-body"><strong>Dry run before reset</strong><span> — Before using Reset Sync History or any destructive action, run a <em>Dry Run</em> to confirm what the next sync would do.</span></div>
+      </div>
+    </section>
+
+    <div class="reveal" style="margin:2rem 0 4rem;">
+      <p class="text-muted text-sm">Still stuck? <a href="https://github.com/xensenx/Secure_Smart_Sync/issues" target="_blank" rel="noopener">Open an issue on GitHub</a> with your log output and a description of the problem. Include your OS, Obsidian version, and plugin version.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="#7c5cbf"><path d="M955 1921.80 c-153.40 -11.80 -301.40 -63.40 -431 -150.40 -78.40 -52.60 -152.20 -121.60 -212.20 -198.40 -93.80 -120.20 -157.60 -273.40 -176.60 -425 -8.20 -64.40 -9.20 -160 -2.40 -221 11.40 -100.60 41 -203 84.80 -292 114.40 -232.20 319 -403.80 563.40 -472.80 108.80 -30.60 220.60 -40.40 335 -29 426.20 42.20 769.60 393.60 802.20 821 3.40 46.80 1.40 148.20 -4 187.80 -18.20 133.20 -54.40 238.40 -120 347 -43.40 72 -99.40 140.80 -158.20 194.60 -152.80 139.80 -341.40 222.80 -541.80 238.40 -30.20 2.20 -108.80 2.20 -139.20 -0.20z"/></g></svg>
+      <span>Secure-Smart-Sync</span>
+    </div>
+    <p class="footer-meta">MIT License &middot; Built by <a href="https://github.com/xensenx" target="_blank" rel="noopener">Sen</a></p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="privacy policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+      <a href="https://github.com/xensenx/Secure_Smart_Sync" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
