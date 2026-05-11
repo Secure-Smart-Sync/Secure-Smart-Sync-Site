@@ -1,0 +1,126 @@
+/* docs.css — Sidebar layout for documentation.html */
+
+.docs-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 0;
+  min-height: calc(100vh - var(--nav-height));
+  align-items: start;
+}
+
+.docs-sidebar {
+  position: sticky;
+  top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--bg-surface);
+  padding: 2rem 0 2rem;
+}
+
+.docs-sidebar-inner { padding: 0 1.25rem; }
+
+.docs-sidebar-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 1.5rem 0 0.5rem;
+  padding: 0 0.25rem;
+}
+.docs-sidebar-inner > ul:first-of-type .docs-sidebar-label { margin-top: 0; }
+
+.docs-sidebar ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+
+.docs-nav-link {
+  display: block;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+  text-decoration: none;
+}
+.docs-nav-link:hover { color: var(--text-primary); background: var(--bg-hover); }
+.docs-nav-link.active { color: var(--purple-light); background: var(--purple-faint); }
+
+.docs-sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.docs-sidebar-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.docs-sidebar-links a:hover { color: var(--purple-light); }
+
+/* ── Main content ──────────────────────────────────────────── */
+.docs-main { padding: 3rem 3rem 5rem; max-width: 860px; }
+
+.docs-section { margin-bottom: 5rem; }
+.docs-section-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.docs-section-header h1, .docs-section-header h2 { margin-bottom: 0.5rem; }
+.docs-lead { font-size: 1.05rem; color: var(--text-secondary); max-width: 620px; }
+
+.docs-next-link { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+/* ── Doc content typography ────────────────────────────────── */
+.docs-h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.docs-h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.4rem;
+  color: var(--text-primary);
+}
+.docs-ol, .docs-ul {
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.docs-ol li, .docs-ul li {
+  font-size: 0.925rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+.docs-content-body p,
+.docs-section > p {
+  margin-top: 0.6rem;
+  font-size: 0.925rem;
+}
+
+/* ── Mobile: collapse sidebar ──────────────────────────────── */
+@media (max-width: 900px) {
+  .docs-layout { grid-template-columns: 1fr; }
+  .docs-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  .docs-main { padding: 2rem 1.25rem 4rem; }
+}
+
+/* ── Section-level next/prev nav ───────────────────────────── */
+.docs-section-nav {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation — Secure-Smart-Sync</title>
+  <meta name="description" content="Full documentation for Secure-Smart-Sync: quick start, beginner guide, architecture, troubleshooting, and more." />
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/Secure-Smart-Sync/Secure-Smart-Sync-assets@main/Icons/ICO/favicon_transparent.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Secure-Smart-Sync home">
+      <img src="https://cdn.jsdelivr.net/gh/Secure-Smart-Sync/Secure-Smart-Sync-assets@main/Icons/SVG/icon_white_transparent.svg" alt="Secure-Smart-Sync logo" class="nav-logo-img" />
+      <span class="nav-logo-text">Secure-Smart-Sync</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="documentation.html" class="active">Documentation</a></li>
+      <li><a href="token-calculator.html">Token Calculator</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+    <div class="nav-cta" style="display:flex; gap:0.5rem; align-items:center;">
+      <a href="https://ko-fi.com/xensenx" target="_blank" rel="noopener" class="btn btn-kofi" id="nav-kofi-btn">Ko-fi</a>
+      <a href="https://github.com/Secure-Smart-Sync/Secure-Smart-Sync" target="_blank" rel="noopener" class="btn btn-github" id="nav-github-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-wrap docs-layout">
+  <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-sidebar-inner">
+      <p class="docs-sidebar-label">Getting Started</p>
+      <ul>
+        <li><a href="#quick-start" class="docs-nav-link">Quick Start</a></li>
+        <li><a href="#beginners-guide" class="docs-nav-link">Beginner's Guide</a></li>
+      </ul>
+      <p class="docs-sidebar-label">Core Concepts</p>
+      <ul>
+        <li><a href="#philosophy" class="docs-nav-link">Core Philosophy</a></li>
+        <li><a href="#architecture" class="docs-nav-link">Architecture</a></li>
+        <li><a href="#why-r2" class="docs-nav-link">Why Cloudflare R2?</a></li>
+        <li><a href="#mobile-indicator" class="docs-nav-link">Mobile Indicator</a></li>
+      </ul>
+      <p class="docs-sidebar-label">Reference</p>
+      <ul>
+        <li><a href="#troubleshooting" class="docs-nav-link">Troubleshooting</a></li>
+        <li><a href="#token-usage" class="docs-nav-link">Token Usage</a></li>
+        <li><a href="#about" class="docs-nav-link">About</a></li>
+      </ul>
+      <div class="docs-sidebar-links">
+        <a href="https://github.com/Secure-Smart-Sync/Secure-Smart-Sync/wiki" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          GitHub Wiki
+        </a>
+        <a href="token-calculator.html">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+          Token Calculator
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <main class="docs-main" id="docs-content">
+
+    <!-- ── Quick Start ──────────────────────────────────────── -->
+    <div id="quick-start" class="docs-section">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Getting Started</span>
+        <h1>Quick Start</h1>
+        <p class="docs-lead">Get Secure-Smart-Sync running in under 10 minutes. You'll need an Obsidian vault and a Cloudflare account.</p>
+      </div>
+
+      <h2 class="docs-h2">Step 1 — Create a Cloudflare R2 bucket</h2>
+      <ol class="docs-ol">
+        <li>Log in to <a href="https://dash.cloudflare.com" target="_blank" rel="noopener">dash.cloudflare.com</a>.</li>
+        <li>Go to <strong>R2 Object Storage</strong> and create a new bucket. Name it anything (e.g. <code>my-obsidian-vault</code>).</li>
+        <li>Under <strong>R2 &rarr; Manage R2 API Tokens</strong>, create a token with <strong>Object Read &amp; Write</strong> permission scoped to your bucket.</li>
+        <li>Copy the <strong>Access Key ID</strong>, <strong>Secret Access Key</strong>, and your <strong>Account ID</strong>.</li>
+      </ol>
+
+      <h2 class="docs-h2">Step 2 — Install the plugin</h2>
+      <ol class="docs-ol">
+        <li>In Obsidian, open <strong>Settings &rarr; Community Plugins &rarr; Browse</strong>.</li>
+        <li>Search for <strong>Secure Smart Sync</strong> and install it.</li>
+        <li>Enable the plugin after installation.</li>
+      </ol>
+      <div class="callout callout-info">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="callout-body"><strong>Manual install</strong><span> You can also install directly from <a href="https://github.com/Secure-Smart-Sync/Secure-Smart-Sync/releases" target="_blank" rel="noopener">GitHub Releases</a> by placing <code>main.js</code>, <code>manifest.json</code>, and <code>styles.css</code> in your vault's <code>.obsidian/plugins/secure-smart-sync/</code> folder.</span></div>
+      </div>
+
+      <h2 class="docs-h2">Step 3 — Configure credentials</h2>
+      <ol class="docs-ol">
+        <li>Open <strong>Settings &rarr; Secure Smart Sync</strong>.</li>
+        <li>Enter your <strong>Account ID</strong>, <strong>Bucket Name</strong>, <strong>Access Key ID</strong>, and <strong>Secret Access Key</strong>.</li>
+        <li>Set an <strong>encryption password</strong>. This is used to encrypt all files before upload — keep it safe.</li>
+        <li>Click <strong>Test Connection</strong> to verify everything is working.</li>
+      </ol>
+
+      <h2 class="docs-h2">Step 4 — First sync</h2>
+      <p>Click the sync icon in the ribbon or run <strong>Secure Smart Sync: Manual Sync</strong> from the command palette. Your vault will be encrypted and uploaded to R2.</p>
+
+      <div class="docs-section-nav">
+        <button class="btn btn-outline" data-docs-next>Beginner's Guide &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── Beginner's Guide ──────────────────────────────────── -->
+    <div id="beginners-guide" class="docs-section">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Getting Started</span>
+        <h2>Beginner's Guide</h2>
+        <p class="docs-lead">A complete walkthrough — from installing the plugin to your first sync and beyond. No prior experience with cloud storage needed.</p>
+      </div>
+
+      <h3 class="docs-h3">1. Installation</h3>
+      <div class="callout callout-warning">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="callout-body"><strong>Manual install required</strong><span> Secure-Smart-Sync is not yet on the official Obsidian Community Plugins store. Install it manually until the review is complete.</span></div>
+      </div>
+      <ol class="docs-ol">
+        <li>Go to the <strong>Releases</strong> page on GitHub and download the latest <code>main.js</code>, <code>manifest.json</code>, and <code>styles.css</code>.</li>
+        <li>Open your vault's hidden config folder — <code>.obsidian</code> at the root of your vault.</li>
+        <li>Navigate to <code>.obsidian/plugins/</code>. Create this folder if it doesn't exist.</li>
+        <li>Create a new folder inside <code>plugins/</code> named exactly <strong><code>Secure-Smart-Sync</code></strong>.</li>
+        <li>Move the three downloaded files into that folder.</li>
+        <li>In Obsidian: <strong>Settings &rarr; Community Plugins</strong>, refresh the list, and toggle <strong>Secure-Smart-Sync</strong> on.</li>
+      </ol>
+
+      <h3 class="docs-h3">2. Cloudflare R2 Setup</h3>
+      <p>SSS uses Cloudflare R2 as its storage backend. You own and control the bucket — no third party has access to your files.</p>
+      <div class="callout callout-info">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="callout-body"><strong>Billing note</strong><span> Cloudflare requires a payment method to activate R2 — this is an industry-standard bot-prevention measure. <strong>It costs $0.00 to set up.</strong> You will not be charged as long as you stay within the free tier (10 GB storage, 1M Class A ops, 10M Class B ops per month).</span></div>
+      </div>
+      <ol class="docs-ol">
+        <li>Log in to <a href="https://dash.cloudflare.com" target="_blank" rel="noopener">dash.cloudflare.com</a>. Navigate to <strong>R2 Object Storage</strong> in the sidebar.</li>
+        <li>If prompted, add a payment method to activate R2.</li>
+        <li>Click <strong>Create bucket</strong>. Choose a name such as <code>my-obsidian-vault-sync</code>. Leave location as <em>Automatic</em>. Click <strong>Create bucket</strong>.</li>
+      </ol>
+
+      <h3 class="docs-h3">3. Generating API Credentials</h3>
+      <ol class="docs-ol">
+        <li>On the R2 Overview page, click <strong>Manage R2 API Tokens</strong> (top-right).</li>
+        <li>Click <strong>Create API Token</strong>. Give it a recognisable name (e.g. "Obsidian Sync Key").</li>
+        <li>Set <strong>Permissions</strong> to <strong>Object Read &amp; Write</strong>.</li>
+        <li>Under <strong>Specify bucket(s)</strong>, select <strong>Apply to specific buckets only</strong> and choose your bucket.</li>
+        <li>Click <strong>Create API Token</strong>.</li>
+      </ol>
+      <div class="callout callout-warning">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="callout-body"><strong>Save credentials now</strong><span> The <strong>Secret Access Key</strong> is shown only once. Do not close the page until you have copied all three values into the plugin.</span></div>
+      </div>
+
+      <h3 class="docs-h3">4. Entering Credentials in Obsidian</h3>
+      <p>Open <strong>Settings &rarr; Secure-Smart-Sync</strong> and fill in:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Field</th><th>Where to find it</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Endpoint</strong></td><td><code>https://&lt;your-account-id&gt;.r2.cloudflarestorage.com</code> — shown on the token page</td></tr>
+            <tr><td><strong>Bucket Name</strong></td><td>The exact name you chose when creating the bucket</td></tr>
+            <tr><td><strong>Access Key ID</strong></td><td>Copied from the Cloudflare API token page</td></tr>
+            <tr><td><strong>Secret Access Key</strong></td><td>Copied from the Cloudflare API token page (shown once only)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.75rem;"><strong>Optional:</strong> Set a <em>Remote Prefix</em> if you want your vault stored in a subfolder within the bucket. Toggle <em>Sync .obsidian Config Directory</em> to also sync themes, snippets, and plugin settings.</p>
+      <p style="margin-top:0.5rem;">Click <strong>Test Connection</strong> at the bottom of the section to verify the plugin can reach your bucket.</p>
+
+      <h3 class="docs-h3">5. Encryption (Strongly Recommended)</h3>
+      <p>Without a password your files are uploaded in plaintext. To maintain true zero-knowledge privacy, set an encryption password before your first sync.</p>
+      <ol class="docs-ol">
+        <li>Enter a strong <strong>Password</strong> in the Encryption section.</li>
+        <li>Choose an <strong>Encryption Method</strong>: <code>openssl-base64</code> encrypts file content only; <code>rclone-base64</code> encrypts content <em>and</em> file names.</li>
+      </ol>
+      <div class="callout callout-warning">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="callout-body"><strong>Never change password after first sync</strong><span> Changing the password or encryption method after syncing will make all existing remote files unreadable. If you must change it, wipe the bucket and re-sync from scratch.</span></div>
+      </div>
+
+      <h3 class="docs-h3">6. The First Sync</h3>
+      <p>Do <strong>not</strong> hit the ribbon sync button for your very first run. Use the Command Palette instead:</p>
+      <ol class="docs-ol">
+        <li>Open the Command Palette (<kbd>Ctrl/Cmd + P</kbd>) and run <strong>Secure-Smart-Sync: Dry run (show what would change)</strong>. This scans without moving files. Check the Developer Console (<kbd>Ctrl/Cmd + Shift + I</kbd>) to verify the plan looks correct — it should list all your local files as "to push".</li>
+        <li>Once satisfied, run <strong>Secure-Smart-Sync: Sync now</strong> from the Command Palette.</li>
+        <li>After the primary device finishes, trigger <strong>Sync now</strong> on each secondary device to pull the encrypted files down.</li>
+      </ol>
+
+      <h3 class="docs-h3">7. Device Pairing (Mobile / Other Devices)</h3>
+      <p>Avoid manually re-entering long API keys on mobile. Use the built-in encrypted pairing relay instead.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>On your primary device (desktop)</th><th>On the new device</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Go to <strong>Settings &rarr; SSS &rarr; Pair Devices</strong> and click <strong>Generate Code</strong>.</td>
+              <td>Install SSS manually (see Step 1). Open SSS settings, go to <strong>Pair Devices</strong>, enter the code, click <strong>Import Code</strong>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-info" style="margin-top:0.75rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="callout-body"><strong>Codes are single-use and expire in 10 minutes.</strong><span> Generate a fresh code for each new device. The password and encryption method must be identical across all devices — a mismatch will create unreadable files and duplicate conflict folders.</span></div>
+      </div>
+
+      <h3 class="docs-h3">8. Sync Settings</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Setting</th><th>Options</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Sync Direction</strong></td><td>Bidirectional (default)</td><td>Keep as Bidirectional for multi-device setups.</td></tr>
+            <tr><td><strong>Conflict Resolution</strong></td><td>Keep newer · Keep larger · Always keep local · Always keep remote</td><td><em>Keep newer</em> recommended.</td></tr>
+            <tr><td><strong>Delete Behaviour</strong></td><td>System trash · Obsidian trash · Delete permanently</td><td><em>System trash</em> recommended — files go to your OS Recycle Bin.</td></tr>
+            <tr><td><strong>Skip Files Larger Than</strong></td><td>0 = no limit, or set MB</td><td>Prevents large video/PDF files from clogging sync.</td></tr>
+            <tr><td><strong>Ignore Paths</strong></td><td>One glob pattern per line</td><td>Exclude local-only folders or file types from sync.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="docs-h3">9. Automation — Smart Sync vs Manual</h3>
+      <div class="callout callout-success">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="callout-body"><strong>Smart Sync (recommended)</strong><span> Toggle Smart Sync <strong>On</strong> for a set-and-forget experience. It watches your activity, waits until you stop typing, then silently pushes changes. Other devices are notified within seconds via the R2 sentinel mechanism.</span></div>
+      </div>
+      <p style="margin-top:0.75rem;"><strong>Smart Sync timing controls:</strong></p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Control</th><th>Default</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td>Idle time before sync</td><td>4 s</td><td>How long to wait after you stop typing before syncing.</td></tr>
+            <tr><td>Active poll interval</td><td>2 000 ms</td><td>How often to check for remote changes while actively editing.</td></tr>
+            <tr><td>Idle poll interval</td><td>30 000 ms</td><td>How often to check when you haven't typed for 2+ minutes.</td></tr>
+            <tr><td>Post-sync re-poll delay</td><td>500 ms</td><td>Wait after a sync before checking state again.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.75rem;">If you turn Smart Sync <strong>Off</strong>, manual triggers are available: <em>Sync on App Open</em>, <em>Auto-Sync Interval</em>, <em>Sync on Save Debounce</em>, and <em>Sync on Idle</em>. Note that manual mode does not include real-time cross-device awareness.</p>
+
+      <h3 class="docs-h3">10. Status Indicators</h3>
+      <p>Auto-syncs run silently — no pop-up toasts unless you trigger manually. Color cues communicate state instead:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Color</th><th>State</th><th>Mobile tap action</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-blue">Gray</span></td><td>Idle</td><td>Triggers a manual sync</td></tr>
+            <tr><td><span class="tag tag-purple">Purple</span></td><td>Sync in progress</td><td>Shows file count and progress</td></tr>
+            <tr><td><span class="tag tag-green">Green</span></td><td>Sync completed</td><td>Shows success summary</td></tr>
+            <tr><td><span class="tag tag-red">Red</span></td><td>Error</td><td>Shows error details</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.75rem;">On <strong>mobile</strong>, a small custom icon sits next to the sidebar toggle on the main dashboard. On <strong>desktop</strong>, the ribbon icon and the bottom-right status bar both reflect live sync state.</p>
+
+      <h3 class="docs-h3">11. Advanced &amp; Danger Zone</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Setting</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Log Level</strong></td><td>Set to <em>Debug</em> when troubleshooting a sync issue.</td></tr>
+            <tr><td><strong>Use custom pairing relay</strong></td><td>Only if you self-host your own <code>sss-relay</code> instance.</td></tr>
+            <tr><td><strong>Show Status Bar</strong></td><td>Toggle the live text updates in Obsidian's bottom-right bar.</td></tr>
+            <tr><td><strong>Reset Sync History</strong></td><td>Clears the plugin's internal state database, forcing a full comparison on the next sync. Does not delete any files.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-warning" style="margin-top:0.75rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="callout-body"><strong>Reset Sync History</strong><span> only wipes the plugin's tracking memory — not your actual notes or remote data. Use it if you suspect your sync state has become confused or corrupted.</span></div>
+      </div>
+
+      <div class="docs-section-nav">
+        <button class="btn btn-outline" data-docs-next>Core Philosophy &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── Core Philosophy ───────────────────────────────────── -->
+    <div id="philosophy" class="docs-section">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Core Concepts</span>
+        <h2>Core Philosophy</h2>
+        <p class="docs-lead">Secure Smart Sync was not built around feature accumulation. Three foundational principles guide every decision.</p>
+      </div>
+
+      <h3 class="docs-h3">1. Privacy First</h3>
+      <p>Personal notes are deeply private. They may contain journals, research, unfinished writing, or information users never intend to share. Secure Smart Sync treats privacy as non-negotiable. Files are encrypted before leaving your device. No third-party server can inspect your notes. Convenience should never come at the cost of privacy.</p>
+
+      <h3 class="docs-h3">2. User Experience Matters</h3>
+      <p>A technically functional product is not automatically a usable product. Significant development time has gone into small UX decisions that collectively make the plugin significantly easier to use — the mobile sync indicator, the encrypted relay for device pairing, and this documentation site all exist because friction reduction matters.</p>
+
+      <h3 class="docs-h3">3. Long-Term Reliability</h3>
+      <p>The definition of "done" is not whether a feature technically works once. It is whether the system remains reliable across messy real-world Obsidian workflows over long periods. Users go offline. They create conflicts. They reopen devices after long inactivity. The plugin is built with these scenarios in mind — conflict handling, duplicate protection, deletion safeguards, and sync state awareness are all part of the foundation, not afterthoughts.</p>
+
+      <div class="callout callout-success">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="callout-body"><strong>Guiding rule</strong><span> Every future feature should protect user privacy, improve user experience, or strengthen long-term reliability. If it conflicts with these foundations, it should be reconsidered.</span></div>
+      </div>
+
+      <div class="docs-section-nav">
+        <button class="btn btn-outline" data-docs-next>Architecture &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── Architecture ──────────────────────────────────────── -->
+    <div id="architecture" class="docs-section">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Core Concepts</span>
+        <h2>Architecture</h2>
+        <p class="docs-lead">Secure Smart Sync is a layered system. Each layer exists to solve a specific problem in secure, long-term, cross-device synchronization.</p>
+      </div>
+
+      <h3 class="docs-h3">1. Virtual File System Layer</h3>
+      <p>The plugin operates on Obsidian's VFS abstraction. The sync engine only interacts with abstract providers — a <strong>Local Provider</strong> (reads/writes vault files) and a <strong>Remote Provider</strong> (interacts with R2 via a custom AWS S3 SDK implementation with a <code>FetchHttpHandler</code> wrapping Obsidian's <code>requestUrl()</code>, bypassing CORS limitations).</p>
+
+      <h3 class="docs-h3">2. Three-Way Sync Engine</h3>
+      <p>Every sync decision compares three states: <strong>local</strong>, <strong>remote</strong>, and <strong>previous sync</strong>. ETags and metadata provide additional validation to prevent accidental overwrites, missed changes, deletion mistakes, and conflict-related data loss.</p>
+
+      <h3 class="docs-h3">3. Cryptographic Pipeline</h3>
+      <p>Encryption is handled through a dedicated pipeline. Heavy cryptographic operations are offloaded to <strong>Web Workers</strong> so Obsidian doesn't freeze on large files.</p>
+      <div class="table-wrap" style="margin-top:0.75rem;">
+        <table>
+          <thead><tr><th>What</th><th>Algorithm</th></tr></thead>
+          <tbody>
+            <tr><td>File contents</td><td>AES-256-CBC</td></tr>
+            <tr><td>File names</td><td>Rclone's Salsa20 + Poly1305</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="docs-h3">4. Device Coordination Layer (Smart Sync)</h3>
+      <p>R2 is intentionally treated as dumb object storage. A lightweight <strong>sentinel file</strong> stored on R2 allows devices to detect when another device has performed meaningful sync activity. The plugin uses a dynamic polling mechanism — active, idle, standby, and post-sync intervals — most of which are exposed to users for fine-grained control.</p>
+
+      <h3 class="docs-h3">5. Encrypted Relay System</h3>
+      <p>Credential onboarding across devices is handled by an encrypted relay using Cloudflare Workers KV. Credentials are transmitted encrypted, stored temporarily, and self-destruct after approximately 10 minutes. The relay source code is publicly available at <a href="https://github.com/Secure-Smart-Sync/Secure-Smart-Sync-relay" target="_blank" rel="noopener">Secure-Smart-Sync-relay</a>.</p>
+
+      <div class="docs-section-nav">
+        <button class="btn btn-outline" data-docs-next>Why Cloudflare R2? &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── Why R2 ──────────────────────────────────────────────── -->
+    <div id="why-r2" class="docs-section">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Core Concepts</span>
+        <h2>Why Cloudflare R2?</h2>
+        <p class="docs-lead">The choice of storage backend was critical. Here is why R2 provides the right conditions for a zero-knowledge Obsidian sync engine.</p>
+      </div>
+
+      <h3 class="docs-h3">Zero Egress Fees</h3>
+      <p>Traditional object storage (AWS S3, Google Cloud Storage) charges for <em>downloading</em> data — and in a multi-device sync workflow, every upload by one device must be downloaded by all others. <strong>Cloudflare R2 charges $0 for data egress.</strong> Users only pay for storage and operations, making costs entirely predictable.</p>
+
+      <h3 class="docs-h3">Generous Free Tier</h3>
+      <p>For the vast majority of personal Obsidian users, Secure Smart Sync is completely free to operate:</p>
+      <ul class="docs-ul">
+        <li><strong>10 GB</strong> free object storage per month</li>
+        <li><strong>1 million</strong> Class A (write/list) operations per month</li>
+        <li><strong>10 million</strong> Class B (read) operations per month</li>
+        <li><strong>Unlimited</strong> free egress bandwidth</li>
+      </ul>
+
+      <h3 class="docs-h3">S3 API Compatibility</h3>
+      <p>R2 implements the widely adopted S3 API, allowing use of the official <code>@aws-sdk/client-s3</code> library — battle-tested SDKs with reliable multipart uploads, streaming, and error handling — rather than writing custom API wrappers.</p>
+
+      <h3 class="docs-h3">Simplified Setup</h3>
+      <p>Creating a bucket and generating a scoped API token on Cloudflare's dashboard takes under 60 seconds. AWS IAM, in comparison, requires navigating users, policies, and roles — a significant barrier for non-technical users.</p>
+
+      <h3 class="docs-h3">Technical Trade-offs</h3>
+      <div class="callout callout-warning">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="callout-body">
+          <strong>Known quirks handled internally</strong>
+          <span>R2 requires <code>forcePathStyle: true</code> in the S3 client configuration. R2 is also a flat key-value store with no native folder objects — SSS synthesises folder structures in-memory from object key prefixes during <code>walk()</code>.</span>
+        </div>
+      </div>
+
+      <div class="docs-section-nav">
+        <button class="btn btn-outline" data-docs-next>Mobile Indicator &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── Mobile Indicator ──────────────────────────────────── -->
+    <div id="mobile-indicator" class="docs-section">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Core Concepts</span>
+        <h2>Mobile Status Indicator</h2>
+        <p class="docs-lead">Obsidian on mobile lacks a status bar and ribbon. This section explains how Secure Smart Sync keeps sync visible without interrupting your writing flow.</p>
+      </div>
+
+      <h3 class="docs-h3">The Problem with Toasts</h3>
+      <p>Early versions relied on popup toast notifications. These were intrusive and disrupted the writing experience. Disabling them on desktop was fine because the status bar provided visibility — but on mobile, removing toasts left users completely blind to background sync activity.</p>
+
+      <h3 class="docs-h3">The Solution</h3>
+      <p>A small sync status indicator is placed directly on the mobile dashboard, positioned next to the sidebar icon. It is intentionally minimal so it feels native to Obsidian rather than like an external UI element. It only appears on the main dashboard and disappears in settings or when the sidebar is open.</p>
+
+      <h3 class="docs-h3">Indicator States</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Color</th><th>State</th><th>Tap action</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-blue">Gray</span></td><td>Idle — no active sync</td><td>Triggers a manual sync with toast confirmation</td></tr>
+            <tr><td><span class="tag tag-purple">Purple</span></td><td>Sync in progress</td><td>Shows progress bar, status, and file count</td></tr>
+            <tr><td><span class="tag tag-green">Green</span></td><td>Sync completed successfully</td><td>Shows file count and success confirmation</td></tr>
+            <tr><td><span class="tag tag-red">Red</span></td><td>Error — sync failed</td><td>Shows detailed error information</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:1rem;">On desktop, the same color cues are applied to the ribbon icon. Desktop users also benefit from the persistent status bar for sync visibility.</p>
+
+      <div class="docs-section-nav">
+        <button class="btn btn-outline" data-docs-next>Troubleshooting &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── Troubleshooting ───────────────────────────────────── -->
+    <div id="troubleshooting" class="docs-section">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Reference</span>
+        <h2>Troubleshooting</h2>
+        <p class="docs-lead">Common issues and their solutions. For an exhaustive reference, visit the <a href="https://github.com/Secure-Smart-Sync/Secure-Smart-Sync/wiki" target="_blank" rel="noopener">GitHub Wiki</a>.</p>
+      </div>
+
+      <div data-accordion-group>
+        <div class="accordion-item">
+          <button class="accordion-trigger">Connection test fails<svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="accordion-body"><div class="accordion-body-inner"><p>Verify your Account ID, Bucket Name, Access Key ID, and Secret Access Key are correct. Ensure the R2 API token has <strong>Object Read &amp; Write</strong> permission scoped to the correct bucket. Check your Cloudflare dashboard to confirm the bucket exists.</p></div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">Files not syncing to other devices<svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="accordion-body"><div class="accordion-body-inner"><p>Ensure all devices use the <strong>same encryption password</strong> and the same bucket. If sentinel polling is disabled or set to a very long interval, changes may take longer to detect. Try triggering a Manual Sync on the receiving device.</p></div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">Sync status shows red / error<svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="accordion-body"><div class="accordion-body-inner"><p>Tap or click the red icon for detailed error information. Common causes: network disconnection, expired API token, or bucket permissions revoked. Re-run the connection test in plugin settings after resolving the issue.</p></div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">Pairing code expired or not working<svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="accordion-body"><div class="accordion-body-inner"><p>Pairing codes automatically self-destruct after approximately 10 minutes. Generate a new code on the source device and enter it on the target device promptly. Ensure both devices have an active internet connection during the pairing process.</p></div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">Conflict files appearing in vault<svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="accordion-body"><div class="accordion-body-inner"><p>Conflicts occur when the same file is edited on two devices before either syncs. The three-way sync engine detects this and creates a conflict copy rather than silently overwriting. Review both versions and keep the one you want, then delete the conflict copy.</p></div></div>
+        </div>
+      </div>
+
+      <div class="docs-section-nav">
+        <button class="btn btn-outline" data-docs-next>Token Usage &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── Token Usage ────────────────────────────────────────── -->
+    <div id="token-usage" class="docs-section">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Reference</span>
+        <h2>Token Usage</h2>
+        <p class="docs-lead">Understanding Cloudflare R2 API operation consumption. For most users, staying within the free tier is straightforward.</p>
+      </div>
+
+      <h3 class="docs-h3">Operation Types</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Class</th><th>Operations</th><th>Free Tier</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Class A</strong></td><td>PUT, DELETE, LIST (write-heavy)</td><td>1 million / month</td></tr>
+            <tr><td><strong>Class B</strong></td><td>GET, HEAD (read-heavy)</td><td>10 million / month</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="docs-h3">Per Sync Cycle (one file, two devices)</h3>
+      <div class="table-wrap" style="margin-top:0.5rem;">
+        <table>
+          <thead><tr><th>Action</th><th>Class A</th><th>Class B</th></tr></thead>
+          <tbody>
+            <tr><td>Device A push</td><td>3</td><td>2</td></tr>
+            <tr><td>Device B pull</td><td>1</td><td>4</td></tr>
+            <tr><td>Device B push</td><td>3</td><td>2</td></tr>
+            <tr><td>Device A pull</td><td>1</td><td>4</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>8</strong></td><td><strong>12</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="docs-h3">Typical Monthly Estimates</h3>
+      <div class="table-wrap" style="margin-top:0.5rem;">
+        <table>
+          <thead><tr><th>Profile</th><th>Devices</th><th>Class A / month</th><th>Class B / month</th></tr></thead>
+          <tbody>
+            <tr><td>Casual (student)</td><td>2, &lt;1K files, 1–3 hrs/day</td><td>15K–40K (1.5–4%)</td><td>300K–900K (3–9%)</td></tr>
+            <tr><td>Writer / Researcher</td><td>2–3, 2K–5K files, 3–6 hrs/day</td><td>50K–180K (5–18%)</td><td>1M–3M (10–30%)</td></tr>
+            <tr><td>Power User</td><td>4–5, 5K+ files, 6–8 hrs/day</td><td>250K–600K (25–60%)</td><td>3M–6M (30–60%)</td></tr>
+            <tr><td>Extreme Edge Case</td><td>5+, 10K+ files, 8+ hrs/day</td><td>700K–1M+ (70–100%+)</td><td>6M–10M+ (60–100%+)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-info" style="margin-top:1.5rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="callout-body"><strong>Use the calculator</strong><span> Get a precise estimate for your specific workflow using the <a href="token-calculator.html">Token Usage Calculator</a>.</span></div>
+      </div>
+
+      <div class="docs-section-nav">
+        <button class="btn btn-outline" data-docs-next>About &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── About ──────────────────────────────────────────────── -->
+    <div id="about" class="docs-section" style="margin-bottom:2rem;">
+      <div class="docs-section-header">
+        <span class="section-eyebrow">Reference</span>
+        <h2>About</h2>
+      </div>
+      <p>Secure Smart Sync (SSS) is an open-source project created by an independent solo developer, <strong>Sen</strong>, as a free and privacy-focused alternative to Obsidian Sync.</p>
+      <p style="margin-top:0.75rem;">The plugin was built to give users full ownership over their notes by allowing them to sync their Obsidian vaults through their own Cloudflare R2 storage while keeping files encrypted locally before upload. The public release of <strong>SSS v1.0.0</strong> was reached after 26 major iterations of the codebase.</p>
+      <p style="margin-top:0.75rem;">All branding assets — including the project name, logos, icons, and visual identity — were created by Sen and remain exclusive to this project. While the source code is licensed under the <strong>MIT License</strong>, the branding assets are not covered under that license.</p>
+      <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.5rem;">
+        <a href="https://github.com/Secure-Smart-Sync" target="_blank" rel="noopener" class="btn btn-outline">GitHub Organization</a>
+        <a href="https://ko-fi.com/xensenx" target="_blank" rel="noopener" class="btn btn-ghost">
+          <img src="https://cdn.jsdelivr.net/gh/Secure-Smart-Sync/Secure-Smart-Sync-assets@main/Icons/SVG/Ko-fi_white.svg" alt="Ko-fi" width="18" height="18" style="vertical-align:middle;" />
+          Support on Ko-fi
+        </a>
+        <button class="btn btn-ghost" id="contact-email-btn" onclick="document.getElementById('email-modal').classList.add('open')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact
+        </button>
+      </div>
+    </div>
+
+
+  </main>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">Secure Smart Sync &copy; <a href="https://github.com/xensenx" target="_blank" rel="noopener">Sen</a></span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="privacy policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+      <a href="https://github.com/Secure-Smart-Sync/Secure-Smart-Sync/wiki" target="_blank" rel="noopener">Wiki</a>
+      <a href="https://github.com/Secure-Smart-Sync" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- Email Modal -->
+<div class="email-modal-overlay" id="email-modal" role="dialog" aria-modal="true" aria-label="Contact email">
+  <div class="email-modal" style="position:relative;">
+    <button class="email-modal-close" onclick="document.getElementById('email-modal').classList.remove('open')" aria-label="Close">&times;</button>
+    <h3>Contact Sen</h3>
+    <p>For questions and feedback that don't fit a GitHub issue.</p>
+    <span class="email-address">securesmartsync@gmail.com</span>
+    <div class="email-modal-actions">
+      <a href="mailto:securesmartsync@gmail.com" class="btn btn-primary" id="compose-email-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Open in Mail
+      </a>
+      <button class="btn btn-ghost" onclick="document.getElementById('email-modal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script src="docs.js"></script>
+</body>
+</html>
