@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Token Usage Calculator — Secure-Smart-Sync</title>
-  <meta name="description" content="Estimate your monthly Cloudflare R2 API operation usage for Secure-Smart-Sync based on your exact workflow." />
-  <link rel="icon" href="https://cdn.jsdelivr.net/gh/Secure-Smart-Sync/Secure-Smart-Sync-assets@main/Icons/ICO/favicon_transparent.ico" />
+  <meta name="description" content="Estimate your monthly Cloudflare R2 API operation usage for Secure-Smart-Sync. Get a tailored estimate based on your exact sync method and workflow." />
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" media="(prefers-color-scheme: light)" sizes="any" href="https://cdn.jsdelivr.net/gh/Secure-Smart-Sync/Secure-Smart-Sync-assets@main/Icons/SVG/icon_black.svg" />
+  <link rel="icon" type="image/svg+xml" media="(prefers-color-scheme: dark)" sizes="any" href="https://cdn.jsdelivr.net/gh/Secure-Smart-Sync/Secure-Smart-Sync-assets@main/Icons/SVG/icon_purple_transparent.svg" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="calculator.css" />
 </head>
@@ -37,168 +39,309 @@
 </nav>
 
 <div class="page-wrap">
-  <div class="container" style="padding-top:2.5rem; padding-bottom:5rem; max-width:800px;">
+  <div class="container calc-container">
 
+    <!-- Page header -->
     <div class="page-header">
       <span class="section-eyebrow">Cloudflare R2</span>
       <h1>Token Usage Calculator</h1>
-      <p>Enter your workflow parameters for a precise monthly estimate of R2 API operations consumed by Secure-Smart-Sync. All calculations use the exact per-operation model from the plugin's sync engine.</p>
+      <p>Answer a few questions about how you use Secure-Smart-Sync and get a tailored monthly estimate of your R2 API operations. Results carry a &#177;40% margin&thinsp;&mdash;&thinsp;actual usage depends on editing patterns that can't be measured without telemetry.</p>
     </div>
 
-    <!-- ── Inputs ─────────────────────────────────────────── -->
-    <div class="calc-card">
-      <div class="calc-section-label">Your workflow</div>
-      <div class="calc-fields">
+    <!-- Step progress bar -->
+    <div class="calc-progress" id="calc-progress" aria-hidden="true">
+      <div class="calc-progress-track">
+        <div class="calc-progress-step active" data-step="1">
+          <div class="calc-progress-dot"></div>
+          <span>Sync method</span>
+        </div>
+        <div class="calc-progress-line"></div>
+        <div class="calc-progress-step" data-step="2">
+          <div class="calc-progress-dot"></div>
+          <span>Settings</span>
+        </div>
+        <div class="calc-progress-line"></div>
+        <div class="calc-progress-step" data-step="3">
+          <div class="calc-progress-dot"></div>
+          <span>Your vault</span>
+        </div>
+        <div class="calc-progress-line"></div>
+        <div class="calc-progress-step" data-step="4">
+          <div class="calc-progress-dot"></div>
+          <span>Results</span>
+        </div>
+      </div>
+    </div>
 
-        <div class="calc-field">
-          <label for="inp-devices">Connected devices</label>
-          <p class="calc-hint">How many devices run the plugin with the same vault.</p>
-          <div class="calc-input-wrap">
-            <input type="number" id="inp-devices" min="1" max="20" value="2" step="1" />
-            <span class="calc-unit">devices</span>
+    <!-- ═══════════════════════════════════════════
+         STEP 1 — Sync method
+    ══════════════════════════════════════════════ -->
+    <div class="calc-step" id="step-1">
+      <div class="calc-step-header">
+        <div class="calc-step-num">1</div>
+        <div>
+          <h2 class="calc-step-title">How do you trigger syncs?</h2>
+          <p class="calc-step-desc">This determines which settings drive your operation count.</p>
+        </div>
+      </div>
+
+      <div class="calc-method-grid">
+
+        <button class="calc-method-card" data-method="smart" id="method-smart">
+          <div class="calc-method-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="calc-method-body">
+            <div class="calc-method-name">Smart Sync</div>
+            <div class="calc-method-desc">Syncs automatically after you stop typing, polls continuously for remote changes in the background.</div>
+          </div>
+          <div class="calc-method-check" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </button>
+
+        <button class="calc-method-card" data-method="manual-auto" id="method-manual-auto">
+          <div class="calc-method-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="calc-method-body">
+            <div class="calc-method-name">Manual automation</div>
+            <div class="calc-method-desc">Scheduled intervals, on-save debounce, or on-idle triggers&thinsp;&mdash;&thinsp;configured in settings, not Smart Sync.</div>
+          </div>
+          <div class="calc-method-check" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </button>
+
+        <button class="calc-method-card" data-method="manual-only" id="method-manual-only">
+          <div class="calc-method-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="calc-method-body">
+            <div class="calc-method-name">Always manual</div>
+            <div class="calc-method-desc">You press the sync button yourself every time. No background automation, no polling.</div>
+          </div>
+          <div class="calc-method-check" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </button>
+
+      </div>
+
+      <div class="calc-step-actions">
+        <button class="btn btn-primary calc-next-btn" id="step1-next" disabled>
+          Continue
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         STEP 2 — Settings (injected by JS)
+    ══════════════════════════════════════════════ -->
+    <div class="calc-step hidden" id="step-2">
+      <div class="calc-step-header">
+        <div class="calc-step-num">2</div>
+        <div>
+          <h2 class="calc-step-title" id="step2-title">Settings</h2>
+          <p class="calc-step-desc" id="step2-desc">Match these to what you have configured in the plugin.</p>
+        </div>
+      </div>
+      <div id="step2-content"></div>
+      <div class="calc-step-actions">
+        <button class="btn btn-ghost calc-back-btn" id="step2-back">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          Back
+        </button>
+        <button class="btn btn-primary calc-next-btn" id="step2-next">
+          Continue
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         STEP 3 — Vault & usage
+    ══════════════════════════════════════════════ -->
+    <div class="calc-step hidden" id="step-3">
+      <div class="calc-step-header">
+        <div class="calc-step-num">3</div>
+        <div>
+          <h2 class="calc-step-title">Your vault &amp; usage</h2>
+          <p class="calc-step-desc">These three inputs have the biggest effect on the final estimate.</p>
+        </div>
+      </div>
+
+      <div class="calc-card">
+
+        <!-- Vault size -->
+        <div class="calc-field-block">
+          <div class="calc-field-label-row">
+            <label for="inp-vault-files">How many files are in your vault?</label>
+            <span class="calc-field-value" id="val-vault-files">2,000 files</span>
+          </div>
+          <p class="calc-hint">R2 paginates LIST at 1,000 objects, so larger vaults cost more per sync scan regardless of how many files changed.</p>
+          <div class="calc-slider-wrap">
+            <input type="range" id="inp-vault-files" min="0" max="7" step="1" value="3" class="calc-slider" />
+            <div class="calc-slider-labels">
+              <span>&lt;100</span><span>500</span><span>1K</span><span>2K</span>
+              <span>5K</span><span>10K</span><span>20K</span><span>50K+</span>
+            </div>
           </div>
         </div>
 
-        <div class="calc-field">
-          <label for="inp-active-hrs">Active hours per day</label>
-          <p class="calc-hint">Hours Obsidian is open and you are actively writing. The rest (24 − active) is idle polling at 30 s intervals.</p>
-          <div class="calc-input-wrap">
-            <input type="number" id="inp-active-hrs" min="0" max="24" value="4" step="1" />
-            <span class="calc-unit" id="idle-hrs-display">20 h idle</span>
+        <!-- Active hours -->
+        <div class="calc-field-block">
+          <div class="calc-field-label-row">
+            <label for="inp-active-hrs">How many hours a day do you actively use Obsidian?</label>
+            <span class="calc-field-value" id="val-active-hrs">4 hrs / day</span>
+          </div>
+          <p class="calc-hint">Hours where Obsidian is open and you are writing. For Smart Sync this drives the faster 2-second poll rate and idle sync triggers.</p>
+          <div class="calc-slider-wrap">
+            <input type="range" id="inp-active-hrs" min="1" max="13" step="1" value="4" class="calc-slider" />
+            <div class="calc-slider-labels">
+              <span>1h</span><span>2h</span><span>3h</span><span>4h</span>
+              <span>5h</span><span>6h</span><span>8h</span><span>10h</span><span>12h+</span>
+            </div>
           </div>
         </div>
 
-        <div class="calc-field">
-          <label for="inp-syncs-day">Syncs per device per day</label>
-          <p class="calc-hint">How many times per day the idle debounce fires and triggers a sync on one device. ~5 per active hour is a typical estimate.</p>
-          <div class="calc-input-wrap">
-            <input type="number" id="inp-syncs-day" min="1" max="500" value="20" step="1" />
-            <span class="calc-unit">syncs / day</span>
+        <!-- Devices -->
+        <div class="calc-field-block">
+          <div class="calc-field-label-row">
+            <label for="inp-devices">How many devices do you have connected?</label>
+            <span class="calc-field-value" id="val-devices">2 devices</span>
+          </div>
+          <p class="calc-hint">Every connected device runs its own polling loop and sync cycles. Each additional device multiplies most costs.</p>
+          <div class="calc-slider-wrap">
+            <input type="range" id="inp-devices" min="1" max="8" step="1" value="2" class="calc-slider" />
+            <div class="calc-slider-labels">
+              <span>1</span><span>2</span><span>3</span><span>4</span>
+              <span>5</span><span>6</span><span>7</span><span>8</span>
+            </div>
           </div>
         </div>
 
-        <div class="calc-field">
-          <label for="inp-files-sync">Avg files changed per sync</label>
-          <p class="calc-hint">Average number of files uploaded or downloaded per sync event. Light: 2 · Moderate: 3 · Heavy: 5+</p>
-          <div class="calc-input-wrap">
-            <input type="number" id="inp-files-sync" min="1" max="200" value="3" step="1" />
-            <span class="calc-unit">files</span>
-          </div>
-        </div>
-
-        <div class="calc-field">
-          <label for="inp-vault-files">Total vault file count</label>
-          <p class="calc-hint">Total files in your vault. Affects LIST cost — R2 paginates at 1 000 objects, so a 5 000-file vault costs 5 LIST ops per sync walk.</p>
-          <div class="calc-input-wrap">
-            <input type="number" id="inp-vault-files" min="1" max="50000" value="2000" step="100" />
-            <span class="calc-unit">files</span>
+        <!-- Simultaneity -->
+        <div class="calc-field-block" id="simultaneity-block">
+          <label class="calc-field-label-static">When you have multiple devices, they are typically:</label>
+          <div class="calc-radio-group" id="inp-simultaneity">
+            <label class="calc-radio-option">
+              <input type="radio" name="simultaneity" value="separate" checked />
+              <span class="calc-radio-body">
+                <span class="calc-radio-title">Used at different times</span>
+                <span class="calc-radio-desc">Phone in the morning, laptop in the evening — rarely both open at once.</span>
+              </span>
+            </label>
+            <label class="calc-radio-option">
+              <input type="radio" name="simultaneity" value="sometimes" />
+              <span class="calc-radio-body">
+                <span class="calc-radio-title">Sometimes both open together</span>
+                <span class="calc-radio-desc">Occasionally have two devices active at the same time.</span>
+              </span>
+            </label>
+            <label class="calc-radio-option">
+              <input type="radio" name="simultaneity" value="concurrent" />
+              <span class="calc-radio-body">
+                <span class="calc-radio-title">Frequently used simultaneously</span>
+                <span class="calc-radio-desc">Often working across multiple devices at the same time.</span>
+              </span>
+            </label>
           </div>
         </div>
 
       </div>
+
+      <div class="calc-step-actions">
+        <button class="btn btn-ghost calc-back-btn" id="step3-back">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          Back
+        </button>
+        <button class="btn btn-primary" id="step3-next">
+          Calculate
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
     </div>
 
-    <!-- ── Results ────────────────────────────────────────── -->
-    <div class="calc-results" id="calc-results" aria-live="polite">
+    <!-- ═══════════════════════════════════════════
+         STEP 4 — Results
+    ══════════════════════════════════════════════ -->
+    <div class="calc-step hidden" id="step-4">
+      <div class="calc-step-header">
+        <div class="calc-step-num">4</div>
+        <div>
+          <h2 class="calc-step-title">Your estimate</h2>
+          <p class="calc-step-desc">Based on your configuration. Results carry a &#177;40% margin&thinsp;&mdash;&thinsp;check your Cloudflare dashboard after the first week for real numbers.</p>
+        </div>
+      </div>
 
-      <div class="calc-result-row">
-        <div class="calc-result-block">
-          <span class="calc-result-label">
+      <!-- Config recap chips -->
+      <div class="calc-chips-row" id="result-chips"></div>
+
+      <!-- Verdict banner -->
+      <div class="calc-verdict-banner" id="result-verdict"></div>
+
+      <!-- Operation meters -->
+      <div class="calc-meters-grid">
+        <div class="calc-meter-card">
+          <div class="calc-meter-header">
             <span class="calc-pill calc-pill-a">Class A</span>
-            Write / List ops per month
-          </span>
-          <span class="calc-result-value" id="val-a">—</span>
-          <div class="calc-bar-wrap"><div class="calc-bar" id="bar-a"></div></div>
-          <span class="calc-result-pct" id="pct-a">— of 1M free tier</span>
+            <span class="calc-meter-label">Write &amp; List operations / month</span>
+          </div>
+          <div class="calc-meter-number" id="result-val-a">—</div>
+          <div class="calc-meter-free">free tier: 1,000,000</div>
+          <div class="calc-bar-wrap"><div class="calc-bar" id="result-bar-a"></div></div>
+          <div class="calc-meter-pct" id="result-pct-a"></div>
         </div>
-        <div class="calc-result-block">
-          <span class="calc-result-label">
+        <div class="calc-meter-card">
+          <div class="calc-meter-header">
             <span class="calc-pill calc-pill-b">Class B</span>
-            Read / Head ops per month
-          </span>
-          <span class="calc-result-value" id="val-b">—</span>
-          <div class="calc-bar-wrap"><div class="calc-bar" id="bar-b"></div></div>
-          <span class="calc-result-pct" id="pct-b">— of 10M free tier</span>
+            <span class="calc-meter-label">Read &amp; Head operations / month</span>
+          </div>
+          <div class="calc-meter-number" id="result-val-b">—</div>
+          <div class="calc-meter-free">free tier: 10,000,000</div>
+          <div class="calc-bar-wrap"><div class="calc-bar" id="result-bar-b"></div></div>
+          <div class="calc-meter-pct" id="result-pct-b"></div>
         </div>
       </div>
 
-      <div class="calc-verdict" id="calc-verdict"></div>
+      <!-- Low/mid/high range -->
+      <div class="calc-range-card" id="result-range"></div>
 
       <!-- Breakdown -->
-      <div class="calc-breakdown">
-        <div class="calc-breakdown-title">Operation breakdown</div>
-        <table class="calc-bd-table">
-          <thead>
-            <tr>
-              <th>Source</th>
-              <th>Class</th>
-              <th>Total / month</th>
-              <th>Per device</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                Sentinel poll (HEAD)
-                <span class="bd-sub" id="bd-active-polls"></span>
-                <span class="bd-sub" id="bd-idle-polls"></span>
-              </td>
-              <td><span class="calc-pill calc-pill-b">B</span></td>
-              <td id="bd-poll">—</td>
-              <td id="bd-poll-d">—</td>
-            </tr>
-            <tr>
-              <td>Own syncs — LIST + PUT + sentinel PUT <span class="bd-sub" id="bd-list"></span></td>
-              <td><span class="calc-pill calc-pill-a">A</span></td>
-              <td id="bd-own-a">—</td>
-              <td id="bd-own-a-d">—</td>
-            </tr>
-            <tr>
-              <td>State-aware pulls — LIST (cross-device)</td>
-              <td><span class="calc-pill calc-pill-a">A</span></td>
-              <td id="bd-state-a">—</td>
-              <td>—</td>
-            </tr>
-            <tr>
-              <td>Own syncs — ETag HEAD per upload</td>
-              <td><span class="calc-pill calc-pill-b">B</span></td>
-              <td id="bd-own-b">—</td>
-              <td id="bd-own-b-d">—</td>
-            </tr>
-            <tr>
-              <td>State-aware pulls — file GET + sentinel GET</td>
-              <td><span class="calc-pill calc-pill-b">B</span></td>
-              <td id="bd-state-b">—</td>
-              <td>—</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="calc-breakdown-card">
+        <div class="calc-breakdown-header">
+          <span>Operation breakdown</span>
+          <span class="calc-breakdown-sub">all devices combined, per month</span>
+        </div>
+        <div class="calc-breakdown-list" id="result-breakdown"></div>
       </div>
 
-    </div>
-
-    <!-- ── Info callouts ──────────────────────────────────── -->
-    <div class="callout callout-info" style="margin-top:2rem;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <div class="callout-body">
-        <strong>Polling dominates Class B</strong>
-        <span>The 2 s active / 30 s idle sentinel HEAD rhythm accounts for ~94 % of all Class B ops. File transfers are a small fraction. Adjusting active hours has the largest impact on your B budget.</span>
+      <!-- Tip -->
+      <div class="callout callout-info" id="result-tip" style="margin-top:1.5rem; display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="callout-body">
+          <strong id="result-tip-title"></strong>
+          <span id="result-tip-body"></span>
+        </div>
       </div>
-    </div>
 
-    <div class="callout callout-info" style="margin-top:1rem;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <div class="callout-body">
-        <strong>Large vaults amplify Class A</strong>
-        <span>R2 paginates LIST at 1 000 objects. A 10 000-file vault costs 10 LIST ops per sync walk — regardless of how many files actually changed. This is the dominant Class A cost for large vaults.</span>
+      <!-- Disclaimer -->
+      <div class="callout callout-warning" style="margin-top:1rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="callout-body">
+          <strong>These are estimates, not guarantees</strong>
+          <span>Actual usage varies with editing patterns, network retries, vault structure, and other factors the calculator can't observe. Most users land comfortably within the free tier. Check your Cloudflare R2 dashboard after the first week for real figures.</span>
+        </div>
       </div>
-    </div>
 
-    <div class="callout callout-success" style="margin-top:1rem;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      <div class="callout-body">
-        <strong>Absolute worst case (Heavy · 3 devices · 10 000 files)</strong>
-        <span>Class A ≈ 130K (13 % of 1M) · Class B ≈ 1.58M (15.8 % of 10M). Both well within the free tier with 85 %+ headroom.</span>
+      <div class="calc-step-actions" style="margin-top:2rem;">
+        <button class="btn btn-ghost calc-back-btn" id="step4-back">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          Back
+        </button>
+        <button class="btn btn-outline" id="step4-restart">Start over</button>
       </div>
     </div>
 
